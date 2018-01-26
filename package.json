@@ -1,0 +1,23 @@
+{
+  "name": "babylonjs-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorsalaun/babylonjs-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victorsalaun/babylonjs-test/issues"
+  },
+  "homepage": "https://github.com/victorsalaun/babylonjs-test#readme",
+  "dependencies": {
+    "babylonjs": "^3.2.0-alpha4",
+    "pepjs": "^0.4.3"
+  }
+}
