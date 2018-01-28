@@ -2,6 +2,7 @@ Player = function (game, canvas) {
     this.scene = game.scene;
 
     this._initCamera(this.scene, canvas);
+    this._initPointerLock(this.scene, canvas);
     this._initWeapon(this.scene)
 };
 
@@ -19,6 +20,38 @@ Player.prototype = {
         this.camera.keysLeft = [37, 81]; // Touche Q
         this.camera.keysRight = [39, 68]; // Touche D;
         scene.activeCamera.attachControl(canvas);
+    },
+
+    _initPointerLock: function (scene, canvas) {
+        var _this = this;
+        // On click event, request pointer lock
+        canvas.addEventListener("click", function (evt) {
+            canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
+            if (canvas.requestPointerLock) {
+                canvas.requestPointerLock();
+            }
+        }, false);
+
+        // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
+        var pointerlockchange = function (event) {
+            _this.controlEnabled = (
+                document.mozPointerLockElement === canvas
+                || document.webkitPointerLockElement === canvas
+                || document.msPointerLockElement === canvas
+                || document.pointerLockElement === canvas);
+            // If the user is alreday locked
+            if (!_this.controlEnabled) {
+                _this.camera.detachControl(canvas);
+            } else {
+                _this.camera.attachControl(canvas);
+            }
+        };
+
+        // Attach events to the document
+        document.addEventListener("pointerlockchange", pointerlockchange, false);
+        document.addEventListener("mspointerlockchange", pointerlockchange, false);
+        document.addEventListener("mozpointerlockchange", pointerlockchange, false);
+        document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
     },
 
     _initWeapon: function (scene) {
