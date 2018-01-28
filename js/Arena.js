@@ -43,10 +43,10 @@ Arena.prototype = {
     },
 
     _initLight: function(scene) {
-        this.light = new BABYLON.PointLight("DirLight", new BABYLON.Vector3(0, 10, 0), scene);
+        this.light = new BABYLON.HemisphericLight("DirLight", new BABYLON.Vector3(0, 10, 0), scene);
         this.light.diffuse = new BABYLON.Color3(1, 1, 1);
         this.light.specular = new BABYLON.Color3(0.6, 0.6, 0.6);
-        this.light.intensity = 2.5;
+        this.light.intensity = 0.5;
     },
 
     _initSkyBox: function (scene) {
