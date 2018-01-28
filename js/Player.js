@@ -13,7 +13,7 @@ Player.prototype = {
         this.camera.checkCollisions = true;
 
         this.camera.speed = 0.5;
-        this.camera.angularSensibility = 1000;
+        this.camera.angularSensibility = 3000;
 
         this.camera.keysUp = [38, 90]; // Touche Z
         this.camera.keysDown = [40, 83]; // Touche S
