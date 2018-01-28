@@ -26,11 +26,16 @@ Game = function (canvasId) {
         }
     }, false);
 
+    window.addEventListener("keyup", function (event) {
+        if (event.keyCode === 32) {
+            _player.jump();
+        }
+    });
+
 };
 
 Game.prototype = {
     _initScene: function (engine) {
-        var scene = new BABYLON.Scene(engine);
-        return scene;
+        return new BABYLON.Scene(engine);
     }
 };

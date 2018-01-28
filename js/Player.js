@@ -33,7 +33,7 @@ Player.prototype = {
         }, false);
 
         // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
-        var pointerlockchange = function (event) {
+        var pointerLockChange = function (event) {
             _this.controlEnabled = (
                 document.mozPointerLockElement === canvas
                 || document.webkitPointerLockElement === canvas
@@ -48,10 +48,10 @@ Player.prototype = {
         };
 
         // Attach events to the document
-        document.addEventListener("pointerlockchange", pointerlockchange, false);
-        document.addEventListener("mspointerlockchange", pointerlockchange, false);
-        document.addEventListener("mozpointerlockchange", pointerlockchange, false);
-        document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
+        document.addEventListener("pointerlockchange", pointerLockChange, false);
+        document.addEventListener("mspointerlockchange", pointerLockChange, false);
+        document.addEventListener("mozpointerlockchange", pointerLockChange, false);
+        document.addEventListener("webkitpointerlockchange", pointerLockChange, false);
     },
 
     _initWeapon: function (scene) {
@@ -63,5 +63,11 @@ Player.prototype = {
         this.weapon.position.y = -0.3; //-0.1;
         this.weapon.position.z = 1; //0.4;
         this.weapon.parent = scene.activeCamera;
+    },
+
+    jump: function () {
+        if (this.camera.cameraDirection.y < 1) {
+            this.camera.cameraDirection.y = 15;
+        }
     }
 };
