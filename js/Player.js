@@ -1,9 +1,11 @@
 Player = function (game, canvas) {
     this.scene = game.scene;
 
+    this.isJumping = false;
+
     this._initCamera(this.scene, canvas);
     this._initPointerLock(this.scene, canvas);
-    this._initWeapon(this.scene)
+    this._initWeapon(this.scene);
 };
 
 Player.prototype = {
@@ -65,9 +67,39 @@ Player.prototype = {
         this.weapon.parent = scene.activeCamera;
     },
 
-    jump: function () {
-        if (this.camera.cameraDirection.y < 1) {
-            this.camera.cameraDirection.y = 15;
+    jump: function (scene) {
+        var _this = this;
+        if (!_this.isJumping) {
+            this.isJumping = false;
+            _this.isJumping = false;
+
+            this.camera.animations = [];
+            var animation = new BABYLON.Animation(
+                "a",
+                "position.y", 20,
+                BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+                BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+            // Animation keys
+            var keys = [];
+            keys.push({frame: 0, value: this.camera.position.y});
+            keys.push({frame: 10, value: this.camera.position.y + 15});
+            keys.push({frame: 20, value: this.camera.position.y});
+            animation.setKeys(keys);
+
+            var easingFunction = new BABYLON.CircleEase();
+            easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+            animation.setEasingFunction(easingFunction);
+
+            this.camera.animations.push(animation);
+
+            var animationEnd = function () {
+                _this.isJumping = false;
+            };
+
+            scene.beginAnimation(this.camera, 0, 20, false, 1, animationEnd);
+
+            _this.isJumping = true;
         }
     }
 };

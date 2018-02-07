@@ -28,7 +28,7 @@ Game = function (canvasId) {
 
     window.addEventListener("keyup", function (event) {
         if (event.keyCode === 32) {
-            _player.jump();
+            _player.jump(_this.scene);
         }
     });
 
